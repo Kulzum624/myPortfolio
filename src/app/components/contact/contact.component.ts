@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
-import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, NgForm } from '@angular/forms';
-import AOS from 'aos';
+import { FormsModule, ReactiveFormsModule, NgForm } from '@angular/forms';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AosService } from './shared/services/aos.service';
 
@@ -8,14 +8,12 @@ import { AosService } from './shared/services/aos.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'my-portfolio';
-  constructor(private aos: AosService){
+export class AppComponent implements OnInit {
+  title = 'myPortfolio';
 
-  }
+  constructor(private aos: AosService) { }
 
-  ngOninit(){
+  ngOnInit() {
     this.aos.init();
   }
-
 }

@@ -1,0 +1,51 @@
+<!-- <p>navbar works!</p> -->
+<div class="fixed inset-x-0 top-3 z-50 flex justify-center">
+
+    <!-- This sets the width of your navbar + shadow -->
+    <div class="relative w-[80%]">
+
+        <!-- TRAPEZIUM SHADOW SHAPE -->
+        <div class="navbar-shadow"></div>
+
+        <nav class="fixed inset-x-0 top-3 mx-auto w-[80%] z-50 bg-gradient-to-b from-lime-400/20 to-lime-950/20 dark:bg-gradient-to-b dark:from-zinc-700 dark:to-gray-950 border-b border-transparent rounded-full"
+            data-aos="fade-down">
+            <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16 relative">
+                <div class="font-[Babylonica] text-2xl font-bold text-gray-700 dark:text-white tracking-wide">
+                    &lt;Kulzum /&gt;
+                </div>
+                <!-- NAV-LINKS -->
+                <ul class="hidden md:flex gap-8 text-gray-700 dark:text-white text-sm font-medium">
+                    <li class="relative group"><button (click)="scrollTo('hero')"
+                            class="hover:text-indigo-500 transition">Hero</button></li>
+                    <li><button (click)="scrollTo('skills')" class="hover:text-indigo-500 transition">Skills</button>
+                    </li>
+                    <li><button (click)="scrollTo('projects')"
+                            class="hover:text-indigo-500 transition">Projects</button></li>
+                    <li><button (click)="scrollTo('contact')" class="hover:text-indigo-500 transition">Contact</button>
+                    </li>
+                </ul>
+
+                <div class="flex items-center gap-5">
+                    <p class="clock w-[100px] font-fascinate text-gray-700 dark:text-white hidden md:block text-sm">{{currentTime}}</p>
+
+
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" [checked]="isDark" (change)="toggleTheme($event)" />
+
+                        <!-- Track -->
+                        <div
+                            class="w-16 h-9 bg-gray-500 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:bg-white-500/80 transition-colors duration-500">
+                        </div>
+
+                        <!-- Spheres -->
+                        <div
+                            class="absolute top-1 left-1 w-7 h-7 rounded-full bg-gradient-to-br from-lime-300/40 to-lime-800 dark:bg-gradient-to-br dark:from-black dark:to-gray-700 transform transition-all duration-500 peer-checked:translate-x-7 peer-checked:bg-gray-900 peer-checked:shadow-[0_0_15px_rgba(0,0,0,0.7)]">
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- class="glow-line"></div> -->
+        </nav>
+    </div>
+</div>

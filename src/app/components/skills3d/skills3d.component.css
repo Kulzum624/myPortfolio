@@ -1,0 +1,59 @@
+/* Container for the custom scrollbar */
+.zoom-scroll {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10;
+  font-family: sans-serif;
+}
+
+/* Title text */
+.zoom-title {
+  font-size: 0.875rem;    /* ~14px */
+  font-weight: 600;
+  color: #111;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Scroll area box */
+.zoom-bar {
+  width: 100%;
+  height: 150px;
+  overflow-y: scroll;
+  background: #f0f0f0;       /* light background */
+  border-radius: 12px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  border: 1px solid #ddd;
+  scroll-behavior: smooth;
+}
+
+/* The internal content to enable scroll */
+.zoom-content {
+  height: 400px;
+}
+
+/* Custom scrollbar styling */
+/* Webkit browsers */
+.zoom-bar::-webkit-scrollbar {
+  width: 8px;
+}
+.zoom-bar::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 8px;
+}
+.zoom-bar::-webkit-scrollbar-thumb {
+  background-color: #4A90E2;   /* primary accent color */
+  border-radius: 8px;
+}
+
+/* Firefox */
+.zoom-bar {
+  scrollbar-width: thin;
+  scrollbar-color: #4A90E2 #e1e1e1;
+}

@@ -40,7 +40,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   private modelPath = 'assets/avatar/blackjacket.glb';
 
-  constructor(private theme: ThemeService, private ngZone: NgZone) {}
+  constructor(private theme: ThemeService, private ngZone: NgZone) { }
 
   toggleTheme() {
     this.theme.toggleTheme();
@@ -176,7 +176,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stopLoop();
-    try { window.removeEventListener('resize', this.onResizeBound); } catch (e) {}
+    try { window.removeEventListener('resize', this.onResizeBound); } catch (e) { }
     this.intersectionObserver?.disconnect();
 
     if (this.renderer) {

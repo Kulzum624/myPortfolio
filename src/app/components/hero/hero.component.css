@@ -49,6 +49,47 @@ app-wave-background,
   z-index: 40 !important;
 }
 
+@media (max-width: 1200px) {
+  .hero-content {
+    margin-top: 2rem;
+  }
+
+  .avatar-layer {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 100vw;
+    height: 70vh;
+    max-height: 550px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hero-avatar-container {
+    width: 100vw !important;
+    height: 70vh !important;
+    max-height: 850px !important;
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .avatar-layer {
+    height: 50vh;
+    max-height: 380px;
+  }
+
+  .hero-avatar-container {
+    height: 50vh !important;
+    max-height: 380px !important;
+  }
+}
+
 /* Improves rendering on supported browsers */
 @supports (content-visibility: auto) {
   .hero-section {

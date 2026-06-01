@@ -22,6 +22,7 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
   private animationId: number | null = null;
   private mixer: AnimationMixer | null = null;
   private observer!: IntersectionObserver;
+  private themeObserver!: MutationObserver;
 
   // ring group & rotation speed
   private ringGroup!: THREE.Group;
@@ -43,12 +44,14 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
       this.onResize();
       window.addEventListener('resize', this.onResizeBound);
       this.setupIntersectionObserver();
+      this.setupThemeObserver();
     });
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.onResizeBound);
     this.stopAnimationLoop();
+    this.themeObserver?.disconnect();
     this.disposeAll();
   }
 
@@ -214,6 +217,24 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
    * and returns a CanvasTexture. This avoids THREE.TextureLoader
    * failing on SVGs with XML declarations, DOCTYPEs, or missing xmlns.
    */
+  // Watch for dark/light theme toggle and rebuild logo sprites
+  private setupThemeObserver() {
+    this.themeObserver = new MutationObserver(() => {
+      // Remove existing logo meshes from the ring group
+      const toRemove: THREE.Object3D[] = [];
+      this.ringGroup.traverse((obj) => {
+        if ((obj as any).userData?.['isLogo']) toRemove.push(obj);
+      });
+      toRemove.forEach(obj => this.ringGroup.remove(obj));
+      // Rebuild with correct tint for new theme
+      this.createLogoSprites();
+    });
+    this.themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
   private loadSvgAsTexture(url: string): Promise<THREE.CanvasTexture> {
     return fetch(url)
       .then(res => res.text())
@@ -239,8 +260,17 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
             const ctx = canvas.getContext('2d')!;
             ctx.clearRect(0, 0, size, size);
             ctx.drawImage(img, 0, 0, size, size);
-            URL.revokeObjectURL(blobUrl);
 
+            // In dark mode: tint every opaque pixel white
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+              ctx.globalCompositeOperation = 'source-atop';
+              ctx.fillStyle = 'white';
+              ctx.fillRect(0, 0, size, size);
+              ctx.globalCompositeOperation = 'source-over';
+            }
+
+            URL.revokeObjectURL(blobUrl);
             const texture = new THREE.CanvasTexture(canvas);
             texture.needsUpdate = true;
             resolve(texture);

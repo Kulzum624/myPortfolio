@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <app-hero></app-hero>
 
-@defer (on viewport) {
+@defer (on idle) {
 <app-about></app-about>
 } @placeholder {
 <div style="height: 400px; display: flex; align-items: center; justify-content: center;">
@@ -9,7 +9,7 @@
 </div>
 }
 
-@defer (on viewport) {
+@defer (on idle) {
 <app-skills3d></app-skills3d>
 } @placeholder {
 <div style="height: 500px; display: flex; align-items: center; justify-content: center;">
@@ -17,7 +17,7 @@
 </div>
 }
 
-@defer (on viewport) {
+@defer (on idle) {
 <app-experience></app-experience>
 } @placeholder {
 <div style="height: 600px; display: flex; align-items: center; justify-content: center;">
@@ -25,19 +25,19 @@
 </div>
 }
 
-@defer (on viewport) {
+@defer (on idle) {
 <app-projects></app-projects>
 } @placeholder {
 <div style="height: 500px;"></div>
 }
 
-@defer (on viewport) {
+@defer (on idle) {
 <app-education></app-education>
 } @placeholder {
 <div style="height: 500px;"></div>
 }
 
-@defer (on viewport) {
+@defer (on idle) {
 <app-contact></app-contact>
 } @placeholder {
 <div style="height: 300px;"></div>

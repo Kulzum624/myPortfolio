@@ -90,6 +90,23 @@ app-wave-background,
   }
 }
 
+/* ── Below 600px: stack to single column, centre everything ── */
+@media (max-width: 600px) {
+  .hero-content {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .hero-left,
+  .hero-right {
+    justify-self: center !important;
+    text-align: center !important;
+    width: 100%;
+    max-width: 320px;
+    padding: 0 0.5rem;
+  }
+}
+
 /* Improves rendering on supported browsers */
 @supports (content-visibility: auto) {
   .hero-section {

@@ -26,8 +26,8 @@
                 </ul>
 
                 <div class="flex items-center gap-5">
-                    <p class="clock w-[100px] font-fascinate text-gray-700 dark:text-white hidden md:block text-sm">{{currentTime}}</p>
-
+                    <p class="clock w-[80px] font-fascinate text-gray-700 dark:text-white hidden sm:block text-sm">
+                        {{currentTime}}</p>
 
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" class="sr-only peer" [checked]="isDark" (change)="toggleTheme($event)" />

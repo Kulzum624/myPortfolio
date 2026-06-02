@@ -14,39 +14,53 @@
          relative z-40 w-full mx-auto
          min-h-[65vh]
          grid
-         grid-cols-1
-         md:grid-cols-2
-         xl:grid-cols-[minmax(250px,1fr)_minmax(320px,1.25fr)_minmax(250px,1fr)]
-         gap-6 xl:gap-10
+         grid-cols-2
+         xl:grid-cols-[minmax(200px,1fr)_minmax(320px,1.25fr)_minmax(200px,1fr)]
+         gap-2 sm:gap-4 xl:gap-10
          items-center
          text-gray-950 dark:text-white">
 
     <!-- Left hero -->
-    <div class="order-1 xl:order-1 text-center space-y-4 self-center">
-      <p class="text-sm uppercase tracking-[0.35rem] text-gray-600 dark:text-gray-300">Hi, I'm</p>
-      <h1 class="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold leading-tight">
+    <div class="hero-left order-1 xl:order-1
+            text-left justify-self-start
+            space-y-1 sm:space-y-2 md:space-y-4
+            self-center px-1 sm:px-2">
+      <p
+        class="text-[0.6rem] sm:text-xs md:text-sm uppercase tracking-[0.25rem] sm:tracking-[0.35rem] text-gray-600 dark:text-gray-300">
+        Hi, I'm</p>
+      <h1 class="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl font-bold leading-tight">
         Kulzum
         <span class="text-green-900 dark:text-yellow-300 font-[babylonica]">
           Mujtaba
         </span>
       </h1>
-      <p class="text-sm sm:text-base md:text-lg xl:text-xl text-gray-800 dark:text-gray-100">
-        Front-End Developer · AI & ML Enthusiast
+      <p class="text-[0.65rem] sm:text-xs md:text-sm lg:text-base xl:text-xl text-gray-800 dark:text-gray-100">
+        Front-End Developer <br class="hidden sm:inline"> AI &amp; ML Enthusiast
       </p>
     </div>
 
-    <!-- Empty middle column (avatar auto in background) -->
+    <!-- Empty middle column (avatar spacer) -->
     <div class="hidden xl:block order-2"></div>
 
     <!-- Right hero -->
-    <div class="order-2 xl:order-3 text-center space-y-4 self-center">
-      <p class="uppercase tracking-[0.5rem] text-sm text-gray-700 dark:text-gray-400">Front-end developer</p>
-      <h2 class="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold leading-tight">
+    <div class="hero-right max-[599px]:hidden
+            md:w-[250px]
+            lg:w-[350px]
+            order-3 xl:order-3
+            text-right justify-self-end
+            space-y-1 sm:space-y-2 md:space-y-4
+            self-center px-1 sm:px-2">
+      <p
+        class="uppercase tracking-[0.2rem] sm:tracking-[0.4rem] text-[0.6rem] sm:text-xs md:text-sm text-gray-700 dark:text-gray-400">
+        Front-end developer</p>
+      <h2 class="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl font-bold leading-tight">
         &lt;coder&gt;
       </h2>
-      <p class="text-lg text-gray-700 dark:text-gray-200">
-        Clean, elegant and performant code focused on delightful human experiences.
+      <p class="text-[0.65rem] sm:text-xs md:text-sm lg:text-base text-gray-700 dark:text-gray-200">
+        Clean, elegant and performant code <br class="hidden sm:inline">
+        focused on delightful human experiences.
       </p>
+
     </div>
   </div>
 </section>

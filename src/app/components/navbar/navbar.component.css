@@ -19,7 +19,7 @@ nav {
     transition: width 0.3s ease;
 }
 .dark .nav-link::after {
-    background: linear-gradient(90deg, #818cf8, #c084fc); /* indigo-400 → purple-400 */
+    background: linear-gradient(90deg, #818cf8, #c084fc) !important; /* indigo-400 → purple-400 */
 }
 .nav-link:hover::after {
     width: 100%;

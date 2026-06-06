@@ -14,7 +14,7 @@ export class DataService {
         title: 'Comfy',
         // description: 'AI-based system to recognize hand gestures for contactless ordering in restaurants.',
         // technologies: ['Python', 'TensorFlow', 'OpenCV'],
-        image: 'assets/projectThumbnails/1.png',
+        image: 'assets/projectThumbnails/1.webp',
         url: "https://comfysharkstack.netlify.app/"
         // github: 'https://github.com/kulzum/gesture-order',
       },
@@ -23,7 +23,7 @@ export class DataService {
         title: 'Weather forecast',
         // description: 'ML model that classifies baby cries into categories such as hungry, tired, and discomfort.',
         // technologies: ['Python', 'Librosa', 'Keras'],
-        image: 'assets/projectThumbnails/2.png',
+        image: 'assets/projectThumbnails/2.webp',
         url: "https://weatherforecastsharksolutions.netlify.app/"
       },
       {
@@ -31,7 +31,7 @@ export class DataService {
         title: 'Recipes App',
         // description: 'Developed a legal services platform to enhance accessibility, affordability, and transparency in legal consultations.',
         // technologies: ['React', 'Strapi', 'Node.js'],
-        image: 'assets/projectThumbnails/3.png',
+        image: 'assets/projectThumbnails/3.webp',
         url: "https://recipesitesharkstack.netlify.app/"
       },
       {
@@ -39,7 +39,7 @@ export class DataService {
         title: 'InWood',
         // description: 'Face mask detection system using computer vision and deep learning.',
         // technologies: ['Python', 'TensorFlow', 'OpenCV'],
-        image: 'assets/projectThumbnails/4.png',
+        image: 'assets/projectThumbnails/4.webp',
         url: "https://inwoodsharkstack.netlify.app/"
       },
       {
@@ -47,7 +47,7 @@ export class DataService {
         title: 'Space Travel',
         // description: 'Face mask detection system using computer vision and deep learning.',
         // technologies: ['Python', 'TensorFlow', 'OpenCV'],
-        image: 'assets/projectThumbnails/5.png',
+        image: 'assets/projectThumbnails/5.webp',
         url: "https://spacetravelsharkstack.netlify.app/"
       },
       {
@@ -55,7 +55,7 @@ export class DataService {
         title: 'Rock Paper Scissors Game',
         // description: 'Face mask detection system using computer vision and deep learning.',
         // technologies: ['Python', 'TensorFlow', 'OpenCV'],
-        image: 'assets/projectThumbnails/6.png',
+        image: 'assets/projectThumbnails/6.webp',
         url: "https://rockpaperscissorsharksolutions.netlify.app/"
       },
 

@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DataService } from '../../shared/services/data.service';
 import { Project } from '../../shared/interfaces/project.interface';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-projects',
-  imports: [CommonModule],
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.css'
+  styleUrl: './projects.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsComponent implements OnInit {
 
@@ -16,6 +15,6 @@ export class ProjectsComponent implements OnInit {
   
   ngOnInit(){
     this.projects = this.data.getProjects();
-    //this.skills = this.data.getSkills();
   }
 }
+

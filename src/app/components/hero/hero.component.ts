@@ -48,53 +48,45 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(async () => {
-      await this.initThree();
-      this.loadModel();
-      this.onResize();
-      window.addEventListener('resize', this.onResizeBound);
-      this.setupIntersectionObserver();
-    });
-  }
+      // ── Parallel load: Three.js + GLB model data at the same time ──
+      const [THREE, glbBuffer, { GLTFLoader }] = await Promise.all([
+        import('three'),
+        fetch(this.modelPath).then(r => r.arrayBuffer()),
+        import('three/examples/jsm/loaders/GLTFLoader.js')
+      ]);
 
-  private onResizeBound = this.onResize.bind(this);
+      // ── Init scene (synchronous, fast) ──
+      const container = this.avatarContainer.nativeElement;
+      this.scene = new THREE.Scene();
+      this.clock = new THREE.Clock();
 
-  private async initThree() {
-    // ✅ Dynamic import — Three.js deferred out of initial bundle
-    const THREE = await import('three');
+      const rect = container.getBoundingClientRect();
+      const aspect = rect.width / Math.max(rect.height, 1);
 
-    const container = this.avatarContainer.nativeElement;
-    this.scene = new THREE.Scene();
-    this.clock = new THREE.Clock();
+      this.camera = new THREE.PerspectiveCamera(32, aspect, 0.1, 100);
+      this.camera.position.set(0, 5.78, 2.2);
 
-    const rect = container.getBoundingClientRect();
-    const aspect = rect.width / Math.max(rect.height, 1);
+      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      this.renderer.setSize(rect.width, rect.height, false);
+      this.renderer.domElement.classList.add('avatar-canvas');
 
-    this.camera = new THREE.PerspectiveCamera(32, aspect, 0.1, 100);
-    this.camera.position.set(0, 5.78, 2.2);
+      container.appendChild(this.renderer.domElement);
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.setSize(rect.width, rect.height, false);
-    this.renderer.domElement.classList.add('avatar-canvas');
+      const ambient = new THREE.AmbientLight(0xffffff, 1);
+      this.scene.add(ambient);
 
-    container.appendChild(this.renderer.domElement);
+      const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+      dir.position.set(5, 10, 7.5);
+      this.scene.add(dir);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1);
-    this.scene.add(ambient);
-
-    const dir = new THREE.DirectionalLight(0xffffff, 0.8);
-    dir.position.set(5, 10, 7.5);
-    this.scene.add(dir);
-  }
-
-  private loadModel() {
-    // ✅ Dynamic import for GLTFLoader as well
-    import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+      // ── Parse the pre-fetched GLB buffer (no network wait) ──
       const loader = new GLTFLoader();
-      loader.load(
-        this.modelPath,
+      loader.parse(
+        glbBuffer,
+        '',
         (gltf) => {
           const model = gltf.scene;
           model.rotation.y = Math.PI * -0.012;
@@ -103,13 +95,19 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
           model.scale.set(2.8, 2.8, 2.8);
           this.scene.add(model);
         },
-        undefined,
         (err) => {
-          console.error('Error loading GLB avatar:', err);
+          console.error('Error parsing GLB avatar:', err);
         }
       );
+
+      // ── Start rendering immediately ──
+      this.onResize();
+      window.addEventListener('resize', this.onResizeBound);
+      this.setupIntersectionObserver();
     });
   }
+
+  private onResizeBound = this.onResize.bind(this);
 
   private animate = () => {
     this.rafId = requestAnimationFrame(this.animate);

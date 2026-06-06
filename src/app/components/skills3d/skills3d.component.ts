@@ -104,6 +104,27 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
     // ring group
     this.ringGroup = new THREE.Group();
     this.scene.add(this.ringGroup);
+
+    // Add horizontal scroll-to-zoom wheel event listener directly to the canvas
+    canvas.addEventListener('wheel', (e: WheelEvent) => {
+      // Check if horizontal scrolling (deltaX) or Shift + scroll (standard vertical wheel mapped to horizontal zoom)
+      const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+      if (isHorizontal) {
+        e.preventDefault(); // Stop trackpad side-swiping navigation (back/forward)
+
+        const delta = e.shiftKey ? e.deltaY : e.deltaX;
+        const zoomSpeed = 0.003;
+        const minDistance = 2.2;
+        const maxDistance = 5.5;
+
+        const currentDistance = this.camera.position.length();
+        let targetDistance = currentDistance + delta * zoomSpeed;
+        targetDistance = Math.max(minDistance, Math.min(maxDistance, targetDistance));
+
+        this.camera.position.setLength(targetDistance);
+        this.controls.update();
+      }
+    }, { passive: false });
   }
 
   // ---------- Loading glTF avatar and logos ----------
@@ -161,23 +182,7 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
     this.createLogoSprites();
   }
 
-  onZoomScroll(event: any) {
-    const scrollTop = event.target.scrollTop;
-    const maxScroll = event.target.scrollHeight - event.target.clientHeight;
 
-    const zoomFactor = scrollTop / maxScroll;
-
-    // Convert scroll position into camera zoom distance
-    const minDistance = 2.5;
-    const maxDistance = 6;//6
-
-    this.controls.minDistance = minDistance;
-    this.controls.maxDistance = maxDistance;
-
-    const targetDistance = minDistance + (maxDistance - minDistance) * zoomFactor;
-
-    this.camera.position.setLength(targetDistance);
-  }
 
 
   private createLogoSprites() {
@@ -261,11 +266,13 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
             ctx.clearRect(0, 0, size, size);
             ctx.drawImage(img, 0, 0, size, size);
 
+
             // In dark mode: tint every opaque pixel white
             const isDark = document.documentElement.classList.contains('dark');
             if (isDark) {
               ctx.globalCompositeOperation = 'source-atop';
-              ctx.fillStyle = 'white';
+              // ctx.fillStyle = '#818cf8';
+              ctx.fillStyle = 'gray';
               ctx.fillRect(0, 0, size, size);
               ctx.globalCompositeOperation = 'source-over';
             }

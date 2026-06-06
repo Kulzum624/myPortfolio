@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        fascinate: ['"Fascinate Inline"', 'system-ui'],
+        body: ['Inter', 'sans-serif'],
+        heading: ['"Space Grotesk"', 'sans-serif'],
       },
       colors: {
         primary: "#ec4899",

@@ -8,7 +8,6 @@
   flex-direction: column;
   gap: 6px;
   z-index: 10;
-  font-family: sans-serif;
 }
 
 /* Title text */
@@ -56,4 +55,13 @@
 .zoom-bar {
   scrollbar-width: thin;
   scrollbar-color: #4A90E2 #e1e1e1;
+}
+
+/* Hide scrollbar for Chrome, Safari, Opera, Edge and Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

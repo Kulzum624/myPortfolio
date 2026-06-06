@@ -18,18 +18,12 @@ nav {
     background: linear-gradient(90deg, #65a30d, #10b981); /* lime-600 → emerald-500 */
     transition: width 0.3s ease;
 }
-.dark .nav-link::after {
+:host-context(.dark) .nav-link::after {
     background: linear-gradient(90deg, #818cf8, #c084fc) !important; /* indigo-400 → purple-400 */
 }
 .nav-link:hover::after {
     width: 100%;
 }
-
-/* Toggle thumb icon visibility fix */
-.toggle-thumb svg:first-child  { display: block; }
-.toggle-thumb svg:last-child   { display: none; }
-input[type="checkbox"].peer:checked ~ .toggle-thumb svg:first-child { display: none; }
-input[type="checkbox"].peer:checked ~ .toggle-thumb svg:last-child  { display: block; }
 
 /* TRAPEZIUM SHADOW UNDER NAVBAR */
 .navbar-shadow {

@@ -1,5 +1,68 @@
 nav {
-    transition: all 0.5s ease-in-out;
+    transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Nav link subtle underline sweep on hover */
+.nav-link {
+    position: relative;
+    padding-bottom: 2px;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 1.5px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #65a30d, #10b981); /* lime-600 → emerald-500 */
+    transition: width 0.3s ease;
+}
+.dark .nav-link::after {
+    background: linear-gradient(90deg, #818cf8, #c084fc); /* indigo-400 → purple-400 */
+}
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Toggle thumb icon visibility fix */
+.toggle-thumb svg:first-child  { display: block; }
+.toggle-thumb svg:last-child   { display: none; }
+input[type="checkbox"].peer:checked ~ .toggle-thumb svg:first-child { display: none; }
+input[type="checkbox"].peer:checked ~ .toggle-thumb svg:last-child  { display: block; }
+
+/* TRAPEZIUM SHADOW UNDER NAVBAR */
+.navbar-shadow {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(65px);
+    width: 98.5%;
+    height: 80px;
+    pointer-events: none;
+
+    /* refined grey glow — matches slate glass navbar */
+    background-image: linear-gradient(
+        180deg,
+        rgba(148, 163, 184, 0.20),   /* slate-400 tint at top */
+        rgba(148, 163, 184, 0.08),
+        rgba(255, 255, 255, 0.001)
+    );
+    filter: blur(18px);
+
+    -webkit-clip-path: polygon(1.5% 0%, 98.5% 0%, 210% 200%, -100% 200%);
+    clip-path: polygon(1.5% 0%, 98.5% 0%, 210% 200%, -100% 200%);
+    border-radius: 0;
+}
+
+/* Dark mode: swap glow to indigo/purple */
+:host-context(.dark) .navbar-shadow {
+    background-image: linear-gradient(
+        180deg,
+        rgba(99, 102, 241, 0.14),   /* indigo tint */
+        rgba(168, 85, 247, 0.06),
+        rgba(0, 0, 0, 0.001)
+    );
 }
 
 .glow-line {
@@ -13,34 +76,3 @@ nav {
     opacity: 0.8;
     z-index: -1;
 }
-
-/* TRAPEZIUM SHADOW UNDER NAVBAR */
-.navbar-shadow {
-    position: absolute;
-    top: 100%;          /* directly under navbar */
-    /* bottom: -10%; */
-    left: 50%;
-    transform: translateX(-50%) translateY(65px);
-    width: 98.5%;         /* matches navbar width */
-    height: 80px;        /* shadow height */
-    pointer-events: none;
-
-  /* white glow look */
-    background-image: linear-gradient( 180deg, rgba(255, 255, 255, 0.30),rgba(255, 255, 255, 0.10),rgba(255, 255, 255, 0.001));
-    filter: blur(15px);
-
-  /* after:bg-gradient-to-b after:from-white/15 after:to-white/5 */
-
-    /* TRAPEZIUM SHAPE:
-        Top width 97%
-        Bottom width ~120%
-        Top = 1.5% → 98.5%
-        Bottom = -10% → 110%
-    */
-    -webkit-clip-path: polygon(1.5% 0%, 98.5% 0%, 210% 200%, -100% 200%);
-    clip-path: polygon(1.5% 0%, 98.5% 0%, 210% 200%, -100% 200%);
-
-    /* ensure shadow is rectangular, not rounded */
-    border-radius: 0;
-}
-

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ClockService } from '../../shared/services/clock.service';
 import { ThemeService } from '../../shared/services/theme.service';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

@@ -8,16 +8,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="./assets/tab.png">
 
-  <!-- Preload hero avatar GLB for instant loading -->
-  <link rel="preload" href="assets/avatar/blackjacket.glb" as="fetch" type="model/gltf-binary" crossorigin>
+  <!-- DNS prefetch for external CDNs (resolves hostnames early on slow networks) -->
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    referrerpolicy="no-referrer" />
-
-  <!-- Typography: Inter (body) + Space Grotesk (headings) -->
+  <!-- Preconnect for fonts (establishes TCP+TLS early) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Preload hero avatar GLB so fetch starts immediately alongside HTML parse -->
+  <link rel="preload" href="assets/avatar/blackjacket.glb" as="fetch" type="model/gltf-binary" crossorigin>
+
+  <!-- Typography: Inter (body) + Space Grotesk (headings) — font-display=swap avoids FOIT on slow net -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome — load non-render-blocking -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'" referrerpolicy="no-referrer" />
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" />
+  </noscript>
 </head>
 
 <body>

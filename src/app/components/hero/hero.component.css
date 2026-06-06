@@ -49,6 +49,7 @@ app-wave-background,
   z-index: 40 !important;
 }
 
+/* ── Responsive avatar sizing ── */
 @media (max-width: 1200px) {
   .hero-content {
     margin-top: 2rem;
@@ -60,11 +61,9 @@ app-wave-background,
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-
     width: 100vw;
     height: 70vh;
     max-height: 550px;
-
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -90,7 +89,7 @@ app-wave-background,
   }
 }
 
-/* ── Below 600px: stack to single column, centre everything ── */
+/* ── Below 600px: single column, centred ── */
 @media (max-width: 600px) {
   .hero-content {
     grid-template-columns: 1fr !important;
@@ -107,66 +106,10 @@ app-wave-background,
   }
 }
 
-/* Improves rendering on supported browsers */
+/* Skip layout/paint cost for content-visibility browsers */
 @supports (content-visibility: auto) {
   .hero-section {
     content-visibility: auto;
     contain-intrinsic-size: 900px;
   }
 }
-
-
-/* ////////////////////////////////////////////////// */
-
-
-
-/* --- FIX #1: Center the avatar layer absolutely --- */
-/* .avatar-layer {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;                 
-  display: flex;
-  justify-content: center;   
-  align-items: flex-end;     
-  pointer-events: none;
-  z-index: 20;
-} */
-
-/* --- FIX #2: Ensure avatar frame centers its contents --- */
-/* .hero-avatar-frame {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  max-height: 1000px;
-  max-width: 1000px;
-}
-.hero-avatar-container {
-  position: relative; */
-  /*width: 100%;                /* FULL width inside centered frame */
- /* max-width: 1000px;           /* increase max width so shoulders fit */
-  /* height: min(80vh, 700px);
-  max-height: 1000px; */
- /* pointer-events: none;    more height to avoid top cutoff */
-  /* overflow: visible !important;   */
-/* } */
-
-
-/* @media (max-width: 768px) {
-  .hero-avatar-container {
-    width: 100%;
-    max-width: 95vw;
-    height: min(75vh, 600px);
-    overflow: visible !important;
-  }
-}
- */
-
-/* Make the Three.js canvas responsive */
-/* .hero-avatar-container canvas {
-  width: 100% !important;
-  height: 100% !important; */
-/*  overflow: visible !important;/* Prevent blocking UI */
-/* } */

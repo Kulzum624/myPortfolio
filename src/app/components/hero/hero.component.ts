@@ -47,64 +47,72 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.ngZone.runOutsideAngular(async () => {
-      // ── Parallel load: Three.js + GLB model data at the same time ──
-      const [THREE, glbBuffer, { GLTFLoader }] = await Promise.all([
-        import('three'),
-        fetch(this.modelPath).then(r => r.arrayBuffer()),
-        import('three/examples/jsm/loaders/GLTFLoader.js')
-      ]);
+    // On slow networks (2G/slow-2G) defer 3D load until idle so hero text paints first
+    const conn = (navigator as any).connection;
+    const isSlow = conn && (conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g');
+    const maxDPR = isSlow ? 1 : 1.75; // cap pixel ratio on slow networks
 
-      // ── Init scene (synchronous, fast) ──
-      const container = this.avatarContainer.nativeElement;
-      this.scene = new THREE.Scene();
-      this.clock = new THREE.Clock();
+    const load3D = () => {
+      this.ngZone.runOutsideAngular(async () => {
+        const [THREE, glbBuffer, { GLTFLoader }] = await Promise.all([
+          import('three'),
+          fetch(this.modelPath).then(r => r.arrayBuffer()),
+          import('three/examples/jsm/loaders/GLTFLoader.js')
+        ]);
 
-      const rect = container.getBoundingClientRect();
-      const aspect = rect.width / Math.max(rect.height, 1);
+        const container = this.avatarContainer.nativeElement;
+        this.scene = new THREE.Scene();
+        this.clock = new THREE.Clock();
 
-      this.camera = new THREE.PerspectiveCamera(32, aspect, 0.1, 100);
-      this.camera.position.set(0, 5.78, 2.2);
+        const rect = container.getBoundingClientRect();
+        const aspect = rect.width / Math.max(rect.height, 1);
 
-      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      this.renderer.setSize(rect.width, rect.height, false);
-      this.renderer.domElement.classList.add('avatar-canvas');
+        this.camera = new THREE.PerspectiveCamera(32, aspect, 0.1, 100);
+        this.camera.position.set(0, 5.78, 2.2);
 
-      container.appendChild(this.renderer.domElement);
+        this.renderer = new THREE.WebGLRenderer({ antialias: !isSlow, alpha: true });
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDPR));
+        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.renderer.setSize(rect.width, rect.height, false);
+        this.renderer.domElement.classList.add('avatar-canvas');
 
-      const ambient = new THREE.AmbientLight(0xffffff, 1);
-      this.scene.add(ambient);
+        container.appendChild(this.renderer.domElement);
 
-      const dir = new THREE.DirectionalLight(0xffffff, 0.8);
-      dir.position.set(5, 10, 7.5);
-      this.scene.add(dir);
+        const ambient = new THREE.AmbientLight(0xffffff, 1);
+        this.scene.add(ambient);
 
-      // ── Parse the pre-fetched GLB buffer (no network wait) ──
-      const loader = new GLTFLoader();
-      loader.parse(
-        glbBuffer,
-        '',
-        (gltf) => {
-          const model = gltf.scene;
-          model.rotation.y = Math.PI * -0.012;
-          model.rotation.x = Math.PI * 0.015;
-          model.position.set(0, 1, 0);
-          model.scale.set(2.8, 2.8, 2.8);
-          this.scene.add(model);
-        },
-        (err) => {
-          console.error('Error parsing GLB avatar:', err);
-        }
-      );
+        const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+        dir.position.set(5, 10, 7.5);
+        this.scene.add(dir);
 
-      // ── Start rendering immediately ──
-      this.onResize();
-      window.addEventListener('resize', this.onResizeBound);
-      this.setupIntersectionObserver();
-    });
+        const loader = new GLTFLoader();
+        loader.parse(
+          glbBuffer,
+          '',
+          (gltf) => {
+            const model = gltf.scene;
+            model.rotation.y = Math.PI * -0.012;
+            model.rotation.x = Math.PI * 0.015;
+            model.position.set(0, 1, 0);
+            model.scale.set(2.8, 2.8, 2.8);
+            this.scene.add(model);
+          },
+          (err) => { console.error('Error parsing GLB avatar:', err); }
+        );
+
+        this.onResize();
+        window.addEventListener('resize', this.onResizeBound);
+        this.setupIntersectionObserver();
+      });
+    };
+
+    // On slow connections: wait for browser idle before loading 3D
+    if (isSlow && 'requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(load3D, { timeout: 5000 });
+    } else {
+      load3D();
+    }
   }
 
   private onResizeBound = this.onResize.bind(this);
@@ -125,7 +133,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
     this.camera.aspect = width / Math.max(height, 1);
     this.camera.updateProjectionMatrix();
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    // Keep the same capped DPR set at init — don't override it on resize
     this.renderer.setSize(width, height, false);
   }
 

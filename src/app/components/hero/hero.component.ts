@@ -4,8 +4,12 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
-  NgZone
+  ElementRef,
+  NgZone,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ThemeService } from '../../shared/services/theme.service';
 
 // ✅ Type-only imports — zero runtime bundle cost
@@ -40,13 +44,15 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   private modelPath = 'assets/avatar/blackjacket.glb';
 
-  constructor(private theme: ThemeService, private ngZone: NgZone) { }
+  constructor(private theme: ThemeService, private ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   toggleTheme() {
     this.theme.toggleTheme();
   }
 
   ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     // On slow networks (2G/slow-2G) defer 3D load until idle so hero text paints first
     const conn = (navigator as any).connection;
     const isSlow = conn && (conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g');
@@ -181,6 +187,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     this.stopLoop();
     try { window.removeEventListener('resize', this.onResizeBound); } catch (e) { }
     this.intersectionObserver?.disconnect();

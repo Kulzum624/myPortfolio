@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy, NgZone, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Education } from '../../shared/interfaces/education.interface';
 import { DataService } from '../../shared/services/data.service';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,8 @@ export class EducationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private data: DataService,
     private elementRef: ElementRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -24,6 +26,8 @@ export class EducationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     this.ngZone.runOutsideAngular(() => {
       // ── Custom IntersectionObserver for ultra-smooth 3D entrance animations ──
       const options = {
@@ -54,6 +58,8 @@ export class EducationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     if (this.observer) {
       this.observer.disconnect();
     }

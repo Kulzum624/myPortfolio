@@ -28,16 +28,5 @@ export class AppComponent implements OnInit {
     this.titleService.setTitle(
       'Kulzum Mujtaba | Frontend Developer · Angular · TypeScript · Karachi'
     );
-
-    this.metaService.addTags([
-      { name: 'description',
-        content: 'Freelance frontend developer in Angular, TypeScript and Tailwind CSS. Karachi, Pakistan. Hire on Upwork.' },
-      { name: 'keywords',
-        content: 'Angular developer, TypeScript, Tailwind CSS, freelance, Upwork, Karachi, Pakistan, frontend developer for hire' },
-      { property: 'og:title',
-        content: 'Kulzum Mujtaba | Frontend Developer' },
-      { property: 'og:description',
-        content: 'Angular & TypeScript developer available for hire. Building fast, clean UIs.' },
-    ]);
   }
 }

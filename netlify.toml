@@ -1,0 +1,9 @@
+[build]
+  command = "ng build"
+  publish = "dist/my-portfolio/browser"
+
+# SPA catch-all fallback — serves index.html for any path that doesn't match a file
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

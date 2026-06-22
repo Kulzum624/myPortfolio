@@ -52,10 +52,12 @@ export class Skills3dComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', this.onResizeBound);
-    this.stopAnimationLoop();
-    this.themeObserver?.disconnect();
-    this.disposeAll();
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('resize', this.onResizeBound);
+      this.stopAnimationLoop();
+      this.themeObserver?.disconnect();
+      this.disposeAll();
+    }
   }
 
   // ---------- Initialization ----------

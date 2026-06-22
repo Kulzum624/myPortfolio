@@ -4,7 +4,6 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
-  ElementRef,
   NgZone,
   Inject,
   PLATFORM_ID

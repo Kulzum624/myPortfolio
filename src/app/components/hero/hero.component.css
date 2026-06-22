@@ -1,0 +1,115 @@
+:host {
+  display: block;
+}
+
+app-wave-background,
+.hero-wave {
+  z-index: 0 !important;
+  position: absolute;
+}
+
+.hero-section {
+  position: relative;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+.avatar-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hero-avatar-container {
+  position: relative;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.hero-avatar-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible !important;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 40 !important;
+}
+
+/* ── Responsive avatar sizing ── */
+@media (max-width: 1200px) {
+  .hero-content {
+    margin-top: 2rem;
+  }
+
+  .avatar-layer {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 70vh;
+    max-height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hero-avatar-container {
+    width: 100vw !important;
+    height: 70vh !important;
+    max-height: 850px !important;
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .avatar-layer {
+    height: 50vh;
+    max-height: 380px;
+  }
+
+  .hero-avatar-container {
+    height: 50vh !important;
+    max-height: 380px !important;
+  }
+}
+
+/* ── Below 600px: single column, centred ── */
+@media (max-width: 600px) {
+  .hero-content {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .hero-left,
+  .hero-right {
+    justify-self: center !important;
+    text-align: center !important;
+    width: 100%;
+    max-width: 320px;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Skip layout/paint cost for content-visibility browsers */
+@supports (content-visibility: auto) {
+  .hero-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+}

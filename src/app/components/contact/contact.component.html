@@ -1,0 +1,76 @@
+<section id="contact" class="relative px-8 py-20 bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden">
+
+    <div class="max-w-3xl mx-auto text-center" data-aos="fade-up" data-aos-duration="600" data-aos-once="true">
+        <h2
+            class="text-4xl font-bold mb-6 bg-gradient-to-r from-lime-600 to-emerald-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+            Get in Touch</h2>
+        <p class="text-gray-400 mb-10">I’d love to hear from you! Drop a message below.</p>
+    </div>
+
+    <form #contactForm="ngForm" (ngSubmit)="sendEmail(contactForm)"
+        class="relative max-w-2xl mx-auto bg-gradient-to-b from-white/[0.08] to-black/60 backdrop-blur-2xl border border-white/10 rounded-[28px] p-3  shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.5)] will-change-transform group">
+
+        <!-- Name & Email inline -->
+        <div class="flex gap-4 px-4 pt-3 pb-2 border-b border-white/5 mb-2 mx-1">
+            <input type="text" name="from_name" [(ngModel)]="formData.from_name" placeholder="Name"
+                class="bg-transparent text-sm text-white placeholder-neutral-500 border-none focus:outline-none focus:ring-0 w-1/3 p-0"
+                required #fromName="ngModel" />
+            <div class="w-px bg-white/10"></div>
+            <input type="email" name="from_email" [(ngModel)]="formData.from_email" placeholder="Email address"
+                class="bg-transparent text-sm text-white placeholder-neutral-500 border-none focus:outline-none focus:ring-0 w-2/3 p-0"
+                required email #fromEmail="ngModel" />
+        </div>
+
+        <!-- Textarea -->
+        <div class="px-5 py-2">
+            <textarea name="message" [(ngModel)]="formData.message" placeholder="Say Something... ✨"
+                class="w-full bg-transparent text-white placeholder-gray-200 font-medium text-lg focus:outline-none min-h-[100px] resize-none p-0"
+                required minlength="5" #message="ngModel"></textarea>
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="flex justify-end px-4 pb-2 pt-1 w-full">
+            <button type="submit" [disabled]="contactForm.invalid || isSending"
+                class="h-12 w-12 rounded-[16px] bg-gradient-to-b from-white/10 to-transparent hover:from-white/15 hover:to-white/5 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)] flex items-center justify-center transition-all duration-300 active:scale-95 disabled:opacity-50">
+                <i *ngIf="!isSending" class="fa-solid fa-paper-plane text-neutral-300"></i>
+                <span *ngIf="isSending"
+                    class="w-5 h-5 border-2 border-t-transparent border-neutral-300 rounded-full animate-spin block"></span>
+            </button>
+        </div>
+
+        <!-- Validation Messages -->
+        <div class="absolute -bottom-8 left-4 flex gap-4 text-xs text-pink-400 font-medium">
+            <span *ngIf="fromName.invalid && fromName.touched">Name required</span>
+            <span *ngIf="fromEmail.invalid && fromEmail.touched">Valid email required</span>
+            <span *ngIf="message.invalid && message.touched">Message too short</span>
+        </div>
+    </form>
+
+    <!-- Success Message -->
+    <div *ngIf="isSent"
+        class="mt-4 bg-green-500/10 border border-green-500 text-green-300 px-6 py-3 rounded-lg w-fit mx-auto animate-fade-in">
+        ✔️ Message sent successfully!
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage && !isSent"
+        class="mt-4 bg-red-500/10 border border-red-500 text-red-300 px-6 py-3 rounded-lg w-fit mx-auto animate-fade-in">
+        ❌ {{ errorMessage }}
+    </div>
+
+    <!-- Social Links -->
+    <div class="flex justify-center gap-10 mt-12">
+        <a href="https://github.com/kulzum624" target="_blank"
+            class="text-white text-4xl hover:scale-110 active:scale-95 transition-transform duration-200 will-change-transform">
+            <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/kulzum-mujtaba-021787207/" target="_blank"
+            class="text-white text-4xl hover:scale-110 active:scale-95 transition-transform duration-200">
+            <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="mailto:kulzummujtabakalhoro@gmail.com" target="_blank"
+            class="text-white text-4xl hover:scale-110 active:scale-95 transition-transform duration-200">
+            <i class="fa-brands fa-google"></i>
+        </a>
+    </div>
+</section>

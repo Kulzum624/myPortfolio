@@ -1,0 +1,74 @@
+:host {
+  display: block;
+}
+
+/* ── 3D Card Animations and Transition States ── */
+.edu-card-wrapper {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* Alternate 3D entrance orientations based on timeline side */
+.edu-card-wrapper.left-side {
+  transform: translateX(-40px) translateY(30px) rotateY(-8deg) scale(0.96);
+}
+
+.edu-card-wrapper.right-side {
+  transform: translateX(40px) translateY(30px) rotateY(8deg) scale(0.96);
+}
+
+/* Visible class triggered by IntersectionObserver */
+.edu-card-wrapper.visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) rotateY(0) scale(1);
+}
+
+/* ── 3D Hover Effects ── */
+.edu-card-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.edu-card-3d > div {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+
+/* Left-side cards tilt inwards towards the right timeline */
+.left-side .edu-card-3d:hover > div {
+  transform: rotateY(5deg) rotateX(-2deg) translateZ(12px) translateY(-4px);
+}
+
+/* Right-side cards tilt inwards towards the left timeline */
+.right-side .edu-card-3d:hover > div {
+  transform: rotateY(-5deg) rotateX(-2deg) translateZ(12px) translateY(-4px);
+}
+
+/* Glow intensity update on hover */
+.edu-card-3d:hover .blur-\[2px\] {
+  opacity: 0.8;
+  filter: blur(8px);
+}
+
+/* ── Glow sphere decorations ── */
+.blur-\[120px\] {
+  filter: blur(120px);
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 767px) {
+  /* On mobile, all cards enter from bottom center with uniform rotation */
+  .edu-card-wrapper.left-side,
+  .edu-card-wrapper.right-side {
+    transform: translateY(30px) scale(0.97);
+  }
+
+  .edu-card-3d:hover > div {
+    transform: translateY(-2px) translateZ(5px);
+  }
+}

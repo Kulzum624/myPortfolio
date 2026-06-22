@@ -1,0 +1,7 @@
+:host {
+    @apply absolute inset-0 z-[60];
+}
+
+#wave-container {
+    @apply w-full h-full pointer-events-none;
+}

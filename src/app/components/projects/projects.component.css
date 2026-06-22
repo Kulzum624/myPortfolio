@@ -1,0 +1,17 @@
+/* GPU-accelerated card rendering */
+.project-card {
+  contain: layout style;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 360px;
+  transition: border-color 0.5s, box-shadow 0.5s;
+}
+
+/* Promote image layer to GPU only on hover to avoid idle GPU memory usage */
+.project-card:hover img {
+  will-change: transform;
+}
+
+/* Prevent images from triggering full repaints */
+.project-card img {
+  contain: strict;
+}

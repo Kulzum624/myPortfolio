@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kulzummujtabafolio.netlify.app/sitemap.xml
